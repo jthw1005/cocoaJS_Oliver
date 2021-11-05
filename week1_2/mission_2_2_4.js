@@ -26,17 +26,31 @@ const data = {
         "alignment": "center",
         "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
     }
-}
+};
 
-function isNum(data) {
-    const arr = [];
+function filterNum(data) {
+    const arrAns = [];
 
-    for (const value in data) 
-        for (const x in data[value]) 
-            if (typeof(data[value][x]) === 'number')
-                arr.push(x);
+    for (const keyDepth_1 in data) 
+        for (const keyDepth_2 in data[keyDepth_1]) 
+            if (typeof(data[keyDepth_1][keyDepth_2]) === 'number')
+                arrAns.push(keyDepth_2);
     
-    console.log(arr);
+    return arrAns;
 }
 
-isNum(data);
+console.log(filterNum(data));
+
+// // Q. 왜why??
+// const data1 = {
+//     "debug": "on"
+// };
+
+// function doSomething(data1) {
+//     for (const keyDepth_1 in data1) 
+//         for (const keyDepth_2 in data1[keyDepth_1]) {
+//                 console.log(keyDepth_2);
+//                 console.log(data1[keyDepth_1][keyDepth_2]);
+//         }
+//     }
+// doSomething(data1);
