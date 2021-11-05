@@ -1,37 +1,21 @@
 // #3.
 
+// 주어진 점수 리스트
 const grades = [[88,76,77], [33,44,44], [90,100,94], [30,44,98]];
+const adder = (previousValue, currentValue) => previousValue + currentValue;
 
 function average(grades) {
-    // 각 학생들의 평균 점수
-    const avg = [];
-    
-    for (let i = 0; i < grades.length; i++) {
-        let sum = 0;
-
-        for (let j = 0; j < grades[i].length; j++)
-            sum += grades[i][j];
-
-        avg.push(sum / 3);
-    }
-
-    console.log(`각 학생들의 평균점수: ${avg}`);
+    // 각 학생들의 평균 점수    
+    for(let i = 0; i < grades.length; i++)
+        console.log(`학생 ${i}의 평균 점수: ` + (grades[i].reduce(adder) / 3).toFixed(1));
 
     // 최고점수의 평균 점수
     let avgMax = 0;
 
-    for (let i = 0; i < grades.length; i++) {
-        let max = 0;
+    for (let i = 0; i < grades.length; i++)
+        avgMax += Math.max(...grades[i]);
 
-        for (let j = 0; j < grades[i].length; j++)
-            max = (max < grades[i][j]) ? grades[i][j] : max;
-
-        avgMax += max;
-    }
-
-    avgMax /= 4;
-
-    console.log(`최고 점수의 평균점수: ${avgMax}`);
+    console.log(`최고 점수의 평균점수: ${avgMax / 4}`);
 }
 
 average(grades);

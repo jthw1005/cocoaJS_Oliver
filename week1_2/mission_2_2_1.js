@@ -11,5 +11,9 @@ function calculate(n) {
     for (let i = 1; i <= n; i++)
         arr.push(factorial(i));
 
+    console.log(arr);
+    
     return arr;
 }
+
+calculate(6);

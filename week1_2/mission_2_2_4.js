@@ -1,5 +1,6 @@
 // #4.
 
+// 주어진 데이터
 const data = {
     "debug": "on",
     "window": {
