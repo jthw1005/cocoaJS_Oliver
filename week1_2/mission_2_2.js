@@ -19,14 +19,11 @@ const peoples = ["crong!@#", "3honux5", "sarah#", "hea3d", "zello", "5lucas"];
         for (let i = 0; i < list.length; i++)
             list[i] = list[i].replace(/[0-9]/g, "");
 
-        // 결과 출력
-        console.log(list);
         return list;
     }
     
     filterId(peoples);
 }
-
 
 //==========================================================================================================================
 // #2. w/o for, while
@@ -43,8 +40,6 @@ function filterId(list) {
     // 요소 내 숫자 제거
     list.forEach((element, index) => list[index] = element.replace(/[0-9]/g, ""));
     
-    // 결과 출력
-    console.log(list);
     return list;
 }
 

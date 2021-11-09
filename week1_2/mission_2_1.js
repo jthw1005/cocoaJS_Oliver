@@ -18,9 +18,9 @@ function factorial(n) {
     const result = arr.reduce((prev, cur) => prev * cur);
     
     return result;
-} 
+}
 
-// calculate 함수 구현
+// calculate w factorial func.
 function calculate(n) {
     const arr = [];
 
@@ -35,4 +35,22 @@ function calculate(n) {
     return arr;
 }
 
+// calculate w/o factorial func.
+function calculate(n) {
+    let result = 1;
+    let resultArr = [];
+
+    // 1 미만 함수 필터링
+    if (n < 1) return 1;
+
+    for (let i = 1; i <= n; i++) {
+        result *= i;
+        resultArr.push(result);
+    }
+
+    return resultArr;
+};
+
+
+// execution part
 calculate(6);
