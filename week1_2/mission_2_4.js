@@ -29,19 +29,22 @@ const data = {
 };
 
 function filterNum(data) {
-    const arrAns = [];
+    const ansArr = [];
 
     for (const keyDepth_1 in data) 
         for (const keyDepth_2 in data[keyDepth_1]) 
             if (typeof(data[keyDepth_1][keyDepth_2]) === 'number')
-                arrAns.push(keyDepth_2);
+            ansArr.push(keyDepth_2);
     
-    return arrAns;
+    return ansArr;
 }
 
 console.log(filterNum(data));
 
-// // Q. 왜why??
+
+// Q1. for문 두 번 안 돌고 한 번에 찾을 수 있는 방법은 없나??
+
+// // Q2. 왜 o과 n이 찢어지지?
 // const data1 = {
 //     "debug": "on"
 // };

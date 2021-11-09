@@ -1,17 +1,10 @@
-// #1.
+//reduce를 이용한 팩토리얼
 
-// recursive를 이용한 factorial
 function factorial(n) {
-    if ( n === 0 || n === 1)    return 1;
-    else                        return n * factorial(n - 1);
-}
+    const arr = [];
 
-// reduce를 이용한 factorial
-function factorial(n) {
     if(n === 0) return 1;
 
-    const arr = [];
-        
     for(let i = 0; i < n; i++)
         arr.push(i + 1);
     
@@ -20,7 +13,6 @@ function factorial(n) {
     return result;
 } 
 
-// calculate 함수 구현
 function calculate(n) {
     const arr = [];
 
@@ -35,4 +27,4 @@ function calculate(n) {
     return arr;
 }
 
-calculate(6);
+console.log(factorial(0));

@@ -1,3 +1,6 @@
+// #5.
+// 객체 탐색해서 타입이 sk인 name 푸시하면 끝?
+
 const data = 
 [{
 	"id": 1,
@@ -80,15 +83,16 @@ const data =
 	}]
 }];
 
-function master(data, arr) {
+function findUser(data, arr, companyName) {
     for(let i = 0; i < data.length; i++) {
-        if(data[i].type === 'sk')              
+        if(data[i].type === companyName)              
             arr.push(data[i].name);
+			
         if(data[i].childnode[0] !== undefined) 
-            arr = [...arr, ...master(data[i].childnode, [])];
+            arr = [...arr, ...findUser(data[i].childnode, [], companyName)];
     }
 
     return arr;
 }
 
-console.log(master(data, []));
+console.log(findUser(data, [], 'sk'));

@@ -1,7 +1,7 @@
 // regualr expressions 설정
-const regExp = /[^0-9a-zA-Z]/;
+const regExp = /[^0-9a-zA-Z]/g;
 // 주어진 List
-const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
+const peoples = ["crong!@#", "3honux5", "sarah#", "hea3d", "zello", "5lucas"];
 
 //==========================================================================================================================
 // #2. w for, while
@@ -17,7 +17,7 @@ const peoples = ["crong!@#", "honux5", "sarah#", "hea3d", "zello", "5lucas"];
     
         // 요소 내 숫자 제거
         for (let i = 0; i < list.length; i++)
-            list[i] = list[i].replace(/[0-9]/, "");
+            list[i] = list[i].replace(/[0-9]/g, "");
 
         // 결과 출력
         console.log(list);
@@ -41,7 +41,7 @@ function filterId(list) {
     list = list.filter(checkSpChar);
     
     // 요소 내 숫자 제거
-    list.forEach((element, index) => list[index] = element.replace(/[0-9]/, ""));
+    list.forEach((element, index) => list[index] = element.replace(/[0-9]/g, ""));
     
     // 결과 출력
     console.log(list);
