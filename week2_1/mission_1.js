@@ -125,7 +125,7 @@ MyHash.prototype.keys = function() {
     const arrOfKeys = [];
 
     this.storage.forEach((item, index) => {
-        let currentNode = this.head;
+        let currentNode = this.storage[index].head;
 
         for(let nodeIndex = 1; nodeIndex <= this.storage[index].length; nodeIndex++) {
             arrOfKeys.push(currentNode.key);
@@ -153,6 +153,7 @@ MyHash.prototype.clear = function() {
     this.storage.forEach((item, index) => {
         this.storage[index] = undefined;
     });
+    this.storageSize = 0;
 };
 
 
@@ -288,17 +289,26 @@ myHashMap.put("oliver", "seoul");
 myHashMap.put("jane", "newyork");
 myHashMap.put("son", "london");
 myHashMap.put("plivdr", "busan");
+myHashMap.put("pliver", "aaa");
+myHashMap.put("plivfr", "bbb");
+myHashMap.put("plivgr", "ccc");
+myHashMap.put("plivhr", "ddd");
+myHashMap.put("plivir", "eee");
+myHashMap.put("plivjr", "eee");
+myHashMap.put("plivkr", "eee");
+myHashMap.put("plivlr", "eee");
+myHashMap.put("plivmr", "eee");
+myHashMap.put("plivnr", "eee");
+myHashMap.put("plivor", "eee");
+myHashMap.put("plivpr", "eee");
+myHashMap.put("plivqr", "eee");
+myHashMap.put("plivrr", "eee");
 
-myHashMap.remove("plivdr");
+console.log(myHashMap.size());
 
+myHashMap.remove("what");
+myHashMap.remove("son");
 
-console.log(myHashMap.storage[0]);
-console.log(myHashMap.storage[1]);
-console.log(myHashMap.storage[2]);
-console.log(myHashMap.storage[3]);
-console.log(myHashMap.storage[4]);
-console.log(myHashMap.storage[5]);
-console.log(myHashMap.storage[6]);
-console.log(myHashMap.storage[7]);
-console.log(myHashMap.storage[8]);
-console.log(myHashMap.storage[9]);
+myHashMap.storage.forEach((element, index) => {
+    console.log(myHashMap.storage[index]);    
+});

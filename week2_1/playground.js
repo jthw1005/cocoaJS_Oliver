@@ -288,8 +288,26 @@ myHashMap.put("oliver", "seoul");
 myHashMap.put("jane", "newyork");
 myHashMap.put("son", "london");
 myHashMap.put("plivdr", "busan");
+myHashMap.put("pliver", "aaa");
+myHashMap.put("plivfr", "bbb");
+myHashMap.put("plivgr", "ccc");
+myHashMap.put("plivhr", "ddd");
+myHashMap.put("plivir", "eee");
+myHashMap.put("plivjr", "eee");
+myHashMap.put("plivkr", "eee");
+myHashMap.put("plivlr", "eee");
+myHashMap.put("plivmr", "eee");
+myHashMap.put("plivnr", "eee");
+myHashMap.put("plivor", "eee");
+myHashMap.put("plivpr", "eee");
+myHashMap.put("plivqr", "eee");
+myHashMap.put("plivrr", "eee");
 
 myHashMap.remove("plivdr");
+console.log(myHashMap.keys());
+
+//myHashMap.replace("oliver", "sanfrancisco");
+
 
 
 console.log(myHashMap.storage[0]);
