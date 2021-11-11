@@ -47,6 +47,36 @@ class LinkedList { // index: 1 ~ n
         this.length--;
     }
 
+    remove(index) {
+
+        // index가 1일 때
+            // length가 1 일 때
+            // length가 2~ 일 때
+        if(index === 1) {
+            if(this.length < 2) {
+                this.head = null;
+                this.tail = null;
+            }
+            else
+                this.head = this.head.next;
+        }
+
+        // index가 n일 때
+        else if(index = this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            this.tail = prevNode;
+            prevNode.next = null;
+        }
+
+        // index가 2 ~ n-1 일 때
+        else if(index >= 2 || index < this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            prevNode.next = currNode.next;
+        }
+        
+        this.length--;
+    }
+
     lookup(index) {
         let counter = 0;
         let currentNode = this.head;

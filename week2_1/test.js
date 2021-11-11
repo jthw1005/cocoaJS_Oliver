@@ -305,4 +305,3 @@ console.log(myHashMap.storage[6]);
 console.log(myHashMap.storage[7]);
 console.log(myHashMap.storage[8]);
 console.log(myHashMap.storage[9]);
-

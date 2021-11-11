@@ -38,63 +38,121 @@ c. delete
 
 
 /* HashMap */
-const MyHash = function() {
+const MyHash = function(sizeOfMap) {
+    this.sizeOfMap = sizeOfMap; 
     this.storage = [];
     this.storageSize = 0;
 };
 
+// getHashCode: 해시코드 반환
+MyHash.prototype.getHashCode = function(key) {
+    let hashCode = 0;
+    let primeNum = 1051;
+    
+    for(let letter of key)
+        hashCode += letter.codePointAt(0);
 
-// put(String key, String value) 키-값을 추가한다.
+    hashCode %= primeNum;
+
+    return hashCode;
+};
+
+// convertToIndex: 해시코드를 해시인덱스로 변환
+MyHash.prototype.convertToIndex = function(hashCode) {
+    let hashIndex = hashCode;
+    if(this.sizeOfMap === 0)
+        return null;
+    else
+        hashIndex %= this.sizeOfMap;
+    return hashIndex;
+};
+
+// put: 키 & 값 추가.
 MyHash.prototype.put = function(key, value) {
-    this.storage[key] = value;
-    this.cnt++;
+    const hashCode = this.getHashCode(key);
+    const hashIndex = this.convertToIndex(hashCode);
+
+    if(this.storage[hashIndex] === undefined) {
+        this.storage[hashIndex] = new LinkedList();
+        this.storage[hashIndex].append(key, value);
+        this.storageSize++;
+    }
+    else {
+        if(this.containKey(key)) {
+            this.storage[hashIndex].getNode(key).value = value;
+        }
+        else {
+            this.storage[hashIndex].append(key, value);
+            this.storageSize++;
+        }
+    }
 };
 
-// remove(String key) 해당 키에 있는 값을 삭제한다.
+// remove: 해당 키의 위치의 키 & 값 삭제.
 MyHash.prototype.remove = function(key) {
-    delete this.collection[key];
-    this.cnt--;
+    const hashCode = this.getHashCode(key);
+    const hashIndex = this.convertToIndex(hashCode);
+    const indexToRemove = this.storage[hashIndex].getIndex(key);
+    this.storage[hashIndex].remove(indexToRemove);
+    this.storageSize--;
 };
 
-// containsKey(String) 해당 키가 존재하는지 판단해서 Bool 결과를 리턴한다.
+// containKey: 해당 키가 이미 존재하는지 판단 후 Bool값 반환.
 MyHash.prototype.containKey = function(key) {
-    return key in this.storage;
+    const hashCode = this.getHashCode(key);
+    const hashIndex = this.convertToIndex(hashCode);
+    const indexOfKey = this.storage[hashIndex].getIndex(key);
+
+    return indexOfKey !== null;
 };
 
-// get(String) 해당 키와 매치되는 값을 찾아서 리턴한다.
+// get: 해당 키와 매치되는 값을 찾아서 반환.
 MyHash.prototype.get = function(key) {
-    return this.storage[key];
+    const hashCode = this.getHashCode(key);
+    const hashIndex = this.convertToIndex(hashCode);
+    const valueOfKey = this.storage[hashIndex].getValue(key);
+
+    return valueOfKey;
 };
 
-// isEmpty() 비어있는 맵인지 Bool 결과를 리턴한다.
+// isEmpty: 비어있는 맵인지 Bool 결과를 반환.
 MyHash.prototype.isEmpty = function() {
-    return (this.cnt === 0);
+    return (this.storageSize === 0);
 };
 
-// keys() 전체 키 목록을 [String] 배열로 리턴한다.
+// keys: 전체 키 목록을 배열로 반환.
 MyHash.prototype.keys = function() {
-    const arr = [];
+    const arrOfKeys = [];
 
-    for(key in this.storage)
-        arr.push(key);
+    this.storage.forEach((item, index) => {
+        let currentNode = this.head;
 
-    return arr;
+        for(let nodeIndex = 1; nodeIndex <= this.storage[index].length; nodeIndex++) {
+            arrOfKeys.push(currentNode.key);
+            currentNode = currentNode.next;
+        }
+    });
+
+    return arrOfKeys;
 };
 
-// replace(String key, String value) 해당키의 기존 값을 새로운 값으로 대체한다.
+// replace: 해당키의 기존 값을 새로운 값으로 대체.
 MyHash.prototype.replace = function(key, value) {
-    this.storage[key] = value;
+    const hashCode = this.getHashCode(key);
+    const hashIndex = this.convertToIndex(hashCode);
+    this.storage[hashIndex].getNode(key).value = value;
 };
 
-// size() 전체 아이템 개수를 리턴한다.
+// size: 전체 아이템 개수를 반환.
 MyHash.prototype.size = function() {
-    return this.cnt;
+    return this.storageSize;
 };
 
 // clear() 전체 맵을 초기화한다.
 MyHash.prototype.clear = function() {
-    this.storage = {};
-    this.cnt = 0;
+    this.storage.forEach((item, index) => {
+        this.storage[index] = undefined;
+    });
 };
 
 
@@ -107,25 +165,11 @@ class Node {
     }
 };
 
-class LinkedList {
+class LinkedList { // index: 1 ~ n
     constructor() {
         this.head = null;
         this.tail = this.head;
         this.length = 0;
-    }
-
-    getPrevCurrNodes(index) {
-        let count = 0;
-        let prevNode = this.head;
-        let currNode = prevNode.next;
-
-        while(count < index - 2) {
-            prevNode = prevNode.next;
-            currNode = prevNode.next;
-            count++;
-        }
-
-        return { prevNode, currNode };
     }
 
     append(key, value) {
@@ -143,8 +187,33 @@ class LinkedList {
     }
 
     remove(index) {
-        let { prevNode, currNode } = this.getPrevCurrNodes(index);
-        prevNode.next = currNode.next;
+
+        // index가 1일 때
+            // length가 1 일 때
+            // length가 2~ 일 때
+        if(index === 1) {
+            if(this.length < 2) {
+                this.head = null;
+                this.tail = null;
+            }
+            else
+                this.head = this.head.next;
+        }
+
+        // index가 n일 때
+        else if(index = this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            this.tail = prevNode;
+            prevNode.next = null;
+        }
+
+        // index가 2 ~ n-1 일 때
+        else if(index >= 2 || index < this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            prevNode.next = currNode.next;
+        }
+        
+        
         this.length--;
     }
 
@@ -158,29 +227,78 @@ class LinkedList {
         return currentNode;
     }
 
-    getValue(key) {
+    getIndex(key) {
         let currentNode = this.head;
 
         for(let i = 0; i < this.length; i++) {
-            if(currentNode.key = key)
-                return currentNode.value;
+            if(currentNode.key === key)
+                return i + 1;
             currentNode = currentNode.next;
         }
         return null;
     }
+
+    getValue(key) {
+        let currentNode = this.head;
+
+        for(let i = 0; i < this.length; i++) {
+            if(currentNode.key === key)
+                return currentNode.value;
+            currentNode = currentNode.next;
+        }
+
+        return null;
+    }
+
+    getNode(key) {
+        let currentNode = this.head;
+
+        for(let i = 0; i < this.length; i++) {
+            if(currentNode.key === key)
+                return currentNode;
+            currentNode = currentNode.next;
+        }
+
+        return null;
+    }
+
+    getPrevCurrNodes(index) {
+        if(index < 2 || this.length < 2) return null;
+        else {
+            let count = 0;
+            let prevNode = this.head;
+            let currNode = prevNode.next;
+
+            while(count < index - 2) {
+                prevNode = prevNode.next;
+                currNode = prevNode.next;
+                count++;
+            }
+
+            return { prevNode, currNode };
+        }
+    }
 };
 
 
-/* execution part */ 
-const data1 = new Hash();
+/* Execution part */
+const myHashMap = new MyHash(10);
 
-data1.put('a', '1');
-data1.put('b', '2');
-data1.put('c', '3');
+myHashMap.put("oliver", "seoul");
+myHashMap.put("jane", "newyork");
+myHashMap.put("son", "london");
+myHashMap.put("plivdr", "busan");
 
-data1.replace('a', '2');
+myHashMap.remove("plivdr");
 
-console.log(data1);
 
-console.log(data1.keys());
-console.log(data1.size());
+console.log(myHashMap.storage[0]);
+console.log(myHashMap.storage[1]);
+console.log(myHashMap.storage[2]);
+console.log(myHashMap.storage[3]);
+console.log(myHashMap.storage[4]);
+console.log(myHashMap.storage[5]);
+console.log(myHashMap.storage[6]);
+console.log(myHashMap.storage[7]);
+console.log(myHashMap.storage[8]);
+console.log(myHashMap.storage[9]);
