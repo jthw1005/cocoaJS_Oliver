@@ -93,7 +93,6 @@ MyHash.prototype.remove = function(key) {
     const hashCode = this.getHashCode(key);
     const hashIndex = this.convertToIndex(hashCode);
     const indexToRemove = this.storage[hashIndex].getIndex(key);
-
     this.storage[hashIndex].remove(indexToRemove);
     this.storageSize--;
 };
@@ -188,8 +187,33 @@ class LinkedList { // index: 1 ~ n
     }
 
     remove(index) {
-        let { prevNode, currNode } = this.getPrevCurrNodes(index);
-        prevNode.next = currNode.next;
+
+        // index가 1일 때
+            // length가 1 일 때
+            // length가 2~ 일 때
+        if(index === 1) {
+            if(this.length < 2) {
+                this.head = null;
+                this.tail = null;
+            }
+            else
+                this.head = this.head.next;
+        }
+
+        // index가 n일 때
+        else if(index = this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            this.tail = prevNode;
+            prevNode.next = null;
+        }
+
+        // index가 2 ~ n-1 일 때
+        else if(index >= 2 || index < this.length) {
+            let { prevNode, currNode } = this.getPrevCurrNodes(index);
+            prevNode.next = currNode.next;
+        }
+        
+        
         this.length--;
     }
 
@@ -239,17 +263,20 @@ class LinkedList { // index: 1 ~ n
     }
 
     getPrevCurrNodes(index) {
-        let count = 0;
-        let prevNode = this.head;
-        let currNode = prevNode.next;
+        if(index < 2 || this.length < 2) return null;
+        else {
+            let count = 0;
+            let prevNode = this.head;
+            let currNode = prevNode.next;
 
-        while(count < index - 2) {
-            prevNode = prevNode.next;
-            currNode = prevNode.next;
-            count++;
+            while(count < index - 2) {
+                prevNode = prevNode.next;
+                currNode = prevNode.next;
+                count++;
+            }
+
+            return { prevNode, currNode };
         }
-
-        return { prevNode, currNode };
     }
 };
 
