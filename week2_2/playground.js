@@ -1,8 +1,7 @@
 const regExpForOpenBracket = /\[/m;
 const regExpForCloseBracket = /\]/m;
 const regExpForNumbers = /[0-9]/m;
-const regExpForComma = /\,/m;
-const data = "[11, 22, [3, 4, [5]], 6]";
+const data = "[11, 22, [3, 4, [555], 66]]";
 
 class ArrInfo {
     constructor(type, value, child) {
@@ -24,6 +23,15 @@ function pushInfo(type, value, child, currentStack) {
     currentStack.child.push(newArrInfo);
 }
 
+function extractNum(str, index) {
+    let strNum = str[index];
+    while(!isNaN(Number(str[index + 1]))) {
+        strNum = strNum.concat('', str[index + 1]);
+        index++;
+    }
+    return [strNum, index];
+}
+
 /* Run */
 function run(str) {
     // 변수 선언 파트
@@ -37,17 +45,20 @@ function run(str) {
 
     // 메인 함수 파트
     for(let index = 0; index < str.length; index++){
-        let currentStack = stackPointer(numOfOpenBrackets - numOfCloseBrackets, stack);
+        const currentStack = stackPointer(numOfOpenBrackets - numOfCloseBrackets, stack);
 
         if(regExpForOpenBracket.test(str[index])) {
-            pushInfo("array","[",[], currentStack);
+            pushInfo("array", "[", [], currentStack);
             numOfOpenBrackets++;
         }
         else if(regExpForCloseBracket.test(str[index])) {
             numOfCloseBrackets++;
         }
         else if(regExpForNumbers.test(str[index])) {
-            pushInfo("number",str[index],[], currentStack);
+            const resultArr = extractNum(str, index);
+            const strNum = resultArr[0];
+            index = resultArr[1];
+            pushInfo("number", strNum, [], currentStack);
             numOfElements++;
         }
     }  

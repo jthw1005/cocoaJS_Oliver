@@ -1,8 +1,7 @@
 const regExpForOpenBracket = /\[/m;
   const regExpForCloseBracket = /\]/m;
   const regExpForNumbers = /[0-9]/m;
-  const regExpForComma = /\,/m;
-  const data = "[1, 2, [3]]"
+  const data = "[11, 22, [3, 4, [555], 66]]";
   
   class ArrInfo {
       constructor(type, value, child) {
@@ -12,71 +11,65 @@ const regExpForOpenBracket = /\[/m;
       }
   };
   
-  
-  function stackPointer(depthOfBracket) {
+  function stackPointer(depthOfBracket, stack) {
       let currentStack = stack;
-      for(let i = 0; i < depthOfBracket; i++) {
+      for(let i = 0; i < depthOfBracket; i++)
           currentStack = currentStack.child[currentStack.child.length - 1];
-      }
       return currentStack;
   }
   
+  function pushInfo(type, value, child, currentStack) {
+      const newArrInfo = new ArrInfo(type, value, child);
+      currentStack.child.push(newArrInfo);
+  }
+  
+  function extractNum(str, index) {
+      let strNum = str[index];
+      while(!isNaN(Number(str[index + 1]))) {
+          strNum = strNum.concat('', str[index + 1]);
+          index++;
+      }
+      return [strNum, index];
+  }
   
   /* Run */
   function run(str) {
-  
+      // 변수 선언 파트
+      let numOfOpenBrackets = 0;
+      let numOfCloseBrackets = 0;
+      let numOfElements = 0;
       const stack = {
           type: "root",
           child: [],
       };
-      let numOfOpenBracket = 0;
-      let numOfCloseBracket = 0;
-      let numOfComma = 0;
-      let currentStack = stack;
   
-  
+      // 메인 함수 파트
       for(let index = 0; index < str.length; index++){
+          const currentStack = stackPointer(numOfOpenBrackets - numOfCloseBrackets, stack);
   
           if(regExpForOpenBracket.test(str[index])) {
-              numOfOpenBracket++;
-              const newArrInfo = new ArrInfo("array","[",[])
-              currentStack.child.push(newArrInfo);
-  
-              currentStack = currentStack.child[currentStack.child.length - 1];
+              pushInfo("array", "[", [], currentStack);
+              numOfOpenBrackets++;
           }
-  
           else if(regExpForCloseBracket.test(str[index])) {
-              numOfCloseBracket++;
-  
+              numOfCloseBrackets++;
           }
-  
           else if(regExpForNumbers.test(str[index])) {
-              const newArrInfo = new ArrInfo("number",str[index],[])
-              currentStack.child.push(newArrInfo);
-          }
-  
-          else if(regExpForComma.test(str[index])){
-              numOfComma++;
-          }
-  
-          else {
-              console.log("Error");
+              const resultArr = extractNum(str, index);
+              const strNum = resultArr[0];
+              index = resultArr[1];
+              pushInfo("number", strNum, [], currentStack);
+              numOfElements++;
           }
       }  
-      
   
-      if(numOfOpenBracket !== numOfCloseBracket) {
-          console.log("괄호가 서로 매칭되지 않습니다.");
-          return 1;
-      }
-      else {
-          console.log(`배열의 중첩된 깊이 수준은 ${numOfOpenBracket}이며, 총 ${numOfComma + 1}개의 원소가 포함되어 있습니다.`);
-      }
-  
+      // 결과 출력 파트
+      if(numOfOpenBrackets !== numOfCloseBrackets)
+          return console.log("괄호가 서로 매칭되지 않습니다.");
+      else
+          console.log(`배열의 중첩된 깊이 수준은 ${numOfOpenBrackets}이며, 총 ${numOfElements}개의 원소가 포함되어 있습니다.`);
       return stack;
   }
   
-  
   /* execution part */
-  
   console.log(JSON.stringify(run(data),null,3));
