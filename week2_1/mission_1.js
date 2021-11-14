@@ -11,29 +11,6 @@
 0. 문자열에 적합한 additive hash function을 이용한다. -> 향후 universal로 변경
 1. chaining 알고리즘을 적용한다.
 2. 이 때 하나의 배열 내에서 linked list를 적용한다.
-
-# 코드 설계
-a. write
-    step0. 
-    step1. 
-    step2. 
-
-    step3. 
-    step4. 
-    step5. 
-    step6. 
-
-b. read
-    step0. key를 
-    step1. 
-    step2. 
-    step3. 
-    step4. 
-    step5. 
-    step6. 
-
-c. delete
-    step0. 이전 노드의 next를 
 */
 
 
