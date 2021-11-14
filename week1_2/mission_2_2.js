@@ -1,7 +1,7 @@
 // regualr expressions 설정
 const regExp = /[^0-9a-zA-Z]/g;
 // 주어진 List
-const peoples = ["crong!@#", "3honux5", "sarah#", "hea3d", "zello", "5lucas"];
+const peoples = ["crong!@#", "3h[]onux5", "sarah#", "hea3d", "zello", "5lucas"];
 
 //==========================================================================================================================
 // #2. w for, while
