@@ -1,4 +1,4 @@
-const standardDistributionTable = [
+const standardNormalDistributionTable = [
     /* 0.0 */   [0.5000, 0.5040, 0.5080, 0.5120, 0.5160, 0.5199, 0.5239, 0.5279, 0.5319, 0.5359],
     /* 0.1 */   [0.5398, 0.5438, 0.5478, 0.5517, 0.5557, 0.5596, 0.5636, 0.5675, 0.5714, 0.5753],
     /* 0.2 */   [0.5793, 0.5832, 0.5871, 0.5910, 0.5948, 0.5987, 0.6026, 0.6064, 0.6103, 0.6141],
@@ -35,15 +35,13 @@ const standardDistributionTable = [
     /* 3.3 */   [0.9995, 0.9995, 0.9995, 0.9996, 0.9996, 0.9996, 0.9996, 0.9996, 0.9996, 0.9997],
     /* 3.4 */   [0.9997, 0.9997, 0.9997, 0.9997, 0.9997, 0.9997, 0.9997, 0.9997, 0.9997, 0.9998]
     ];
-    const data = [89.23, 82.03, 71.56, 78.82, 85.05, 84.44, 67.53, 71.7, 77.97, 73.77, 
-        84.25, 67.01, 73.78, 64.19, 89.89, 90.32, 73.21, 75.35, 83.22, 74.01];
     
     class MyStatistics {
         constructor(data) {
             this.data = data;
         }
-        // 소수점 이하 반올림
-        flushBelow(value, num) {
+        // 소수점 num 아래 반올림
+        flushBelowNum(value, num) {
             value = Math.round(value * Math.pow(10, num)) / Math.pow(10, num);
             return value;
         }
@@ -64,35 +62,44 @@ const standardDistributionTable = [
             return result;
         }
         // 표준정규분포화
-        transformToSRD(value) {
-            const Z = this.flushBelow((value - this.getMean()) / this.getStandardDeviation(), 2);
+        transformToSND(value) {
+            const Z = this.flushBelowNum((value - this.getMean()) / this.getStandardDeviation(), 2);
             return Z;
         }
+        // 아래 함수 두 개 오버라이딩으로 합치기
         // 표준정규분포 확률 구하기
         getAreaOfSRD(Z) {
-            let signedFlag = true;
-            if (Z < 0) signedFlag = false;
-    
+            let isZPlus = (Z < 0 ? false : true);
+            let result = 0;
+
             Z = Math.abs(Z);
             const row = Math.floor(Z * 10);
             const col = Math.floor((Z * 100) % 10);
-            let area = standardDistributionTable[row][col];
-    
-            return (signedFlag ? this.flushBelow(area, 4) : this.flushBelow(1 - area, 4));
+            const probability = standardNormalDistributionTable[row][col];
+
+            if (isZPlus)
+                result = this.flushBelowNum(probability, 4);
+            else
+                result = this.flushBelowNum(1 - probability, 4);
+            return result;
         }
         // 표준정규분포를 이용하여 확률 구하기
         getProbability(lower, upper) {
-            const ZofLower = this.transformToSRD(lower);
-            const ZofUpper = this.transformToSRD(upper);
-            const area = this.getAreaOfSRD(ZofUpper) - this.getAreaOfSRD(ZofLower);
-            return this.flushBelow(area, 4);
+            const ZofLower = this.transformToSND(lower);
+            const ZofUpper = this.transformToSND(upper);
+            const probability = this.getAreaOfSRD(ZofUpper) - this.getAreaOfSRD(ZofLower);
+            return this.flushBelowNum(probability, 4);
         }
     }
     
     /* Execution part */
+    const data = [89.23, 82.03, 71.56, 78.82, 85.05, 84.44, 67.53, 71.7, 77.97, 73.77, 
+        84.25, 67.01, 73.78, 64.19, 89.89, 90.32, 73.21, 75.35, 83.22, 74.01];
+
+    // 이하 template 이용해서 다시 쓸 것.
     const classA = new MyStatistics(data);
-    console.log(classA.transformToSRD(70));
-    console.log(classA.transformToSRD(80));
-    console.log(classA.getAreaOfSRD(classA.transformToSRD(70)));
-    console.log(classA.getAreaOfSRD(classA.transformToSRD(80)));
+    console.log(classA.transformToSND(70));
+    console.log(classA.transformToSND(80));
+    console.log(classA.getAreaOfSRD(classA.transformToSND(70)));
+    console.log(classA.getAreaOfSRD(classA.transformToSND(80)));
     console.log(classA.getProbability(70, 80));
