@@ -2,34 +2,34 @@ const toDoForm = document.getElementById("todo-form");
 const toDoInput = document.querySelector("#todo-form input");
 const toDoList = document.getElementById("todo-list");
 
-function deleteToDo(event) {
+function handleDeleteToDo(event) {
   const li = event.target.parentElement;
   li.remove();
 }
 
-function handleStrikethrough(event) {
-  const span = event.target.parentElement;
-  if (span.style.textDecoration === "line-through")
-    span.style.textDecoration = "none";
-  else span.style.textDecoration = "line-through";
+function handleToDoChecked(event) {
+  const span = event.target.nextElementSibling;
+  span.classList.toggle("todo_checked");
 }
 
 function paintToDo(newTodo) {
   const li = document.createElement("li");
+  li.className = "todo_list";
+  toDoList.appendChild(li);
+
   const input = document.createElement("input");
   input.type = "checkbox";
   li.appendChild(input);
-  toDoList.appendChild(li);
+  input.addEventListener("click", handleToDoChecked);
 
   const span = document.createElement("span");
   span.innerText = newTodo;
   li.appendChild(span);
-  input.addEventListener("click", handleStrikethrough);
 
   const button = document.createElement("button");
   button.innerText = "❌";
   li.appendChild(button);
-  button.addEventListener("click", deleteToDo);
+  button.addEventListener("click", handleDeleteToDo);
 }
 
 function handleToDoSubmit(event) {
