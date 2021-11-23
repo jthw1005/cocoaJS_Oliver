@@ -1,9 +1,6 @@
-.todo_checked {
-  text-decoration: line-through;
-}
-
-.todo_list {
-  list-style-type: none;
+* {
+  padding: 50;
+  margin: 50;
 }
 
 #background {
@@ -16,4 +13,46 @@
   bottom: 0px;
   z-index: -1;
   opacity: 85%;
+}
+
+/* h2 {
+  padding: 50px 10px 10px;
+}
+
+#todo-form {
+  padding: 10px 10px 10px;
+}
+
+#todo-list {
+  padding: 0px 30px;
+} */
+
+.todo_checked {
+  text-decoration: line-through;
+}
+
+.todo_list {
+  list-style-type: none;
+}
+
+li span {
+  display: inline-block;
+  overflow-wrap: break-word;
+  border-radius: 3px;
+}
+
+.mouseenter {
+  background-color: white;
+}
+
+.mouseleave {
+  background-color: none;
+}
+
+.todo_focusin {
+  background-color: skyblue;
+}
+
+.todo_focusout {
+  background-color: none;
 }
