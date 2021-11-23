@@ -5,6 +5,7 @@ const clock = document.querySelector("h3#clock");
 const TODOS_KEY = "todos";
 
 let toDos = [];
+let toDosDone = [];
 
 function saveToDos() {
   localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
@@ -32,16 +33,6 @@ function handleToDoChecked(event) {
     }
   });
   saveToDos();
-}
-
-function handleToDoMouseEnter(event) {
-  event.target.classList.remove("mouseleave");
-  event.target.classList.add("mouseenter");
-}
-
-function handleToDoMouseLeave(event) {
-  event.target.classList.remove("mouseenter");
-  event.target.classList.add("mouseleave");
 }
 
 function handleToDoFocusIn(event) {
@@ -75,8 +66,6 @@ function rendorToDo(newToDoObj) {
   span.innerText = newToDoObj.text;
   span.contentEditable = true;
   li.appendChild(span);
-  span.addEventListener("mouseenter", handleToDoMouseEnter);
-  span.addEventListener("mouseleave", handleToDoMouseLeave);
   span.addEventListener("focusin", handleToDoFocusIn);
   span.addEventListener("focusout", handleToDoFocusOut);
 
