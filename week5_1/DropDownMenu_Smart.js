@@ -1,16 +1,12 @@
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ handling menu bar ~~~~~~~~~~~~~~~~~~~~~~~~ */
-function handleMenuDisplay() {
-  const menu = arguments[1].target.nextElementSibling;
+function handleMenuDisplay(event) {
+  const menu = event.target.nextElementSibling;
   tIdMenu = setTimeout(() => {
     menu.classList.toggle("hide");
-  }, arguments[0]);
+  }, DELAY_TIME);
 }
 
-/*
-argument를 쓰는 경우 저게 뭘 의미하는지 파악하기 힘들기 때문에 의미 있는 변수에 할당해주고 해당 변수를 써야함.
-*/
-
-function handleTerminateSchedule() {
+function handleStopMenuDisplaySchedule() {
   clearTimeout(tIdMenu);
 }
 
@@ -22,39 +18,72 @@ function handleMenuHide(event) {
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ handle record ~~~~~~~~~~~~~~~~~~~~~~~~ */
-function handleRecordMouse(event) {
-  x = event.screenX;
-  y = event.screenY;
+function handleMouseRecord(event) {
+  if (!timer) {
+    timer = setTimeout(function () {
+      timer = null;
+      checkObjOverlap(event.target.innerText);
+      rendorRecordArray(mouseRecordArr);
+    }, 500);
+  }
 }
 
-function handlePrintRecord() {
-  tIdRecord = setInterval(() => {
-    console.log(x, y);
-  }, 1000);
+// 밑에 함수 다시 짜라 ㅡㅡ
+function checkObjOverlap(innerText) {
+  let flag = false;
+  mouseRecordArr.forEach((element) => {
+    if (element.innerText === innerText) {
+      element.cnt++;
+      flag = true;
+    }
+  });
+  if (flag) {
+    return mouseRecordArr;
+  } else {
+    createRecordObj(innerText);
+  }
 }
 
-function handleTerminatePrint() {
-  clearInterval(tIdRecord);
+function createRecordObj(innerText) {
+  const mouseRecordObj = {
+    innerText: innerText,
+    cnt: 0,
+  };
+  mouseRecordArr.push(mouseRecordObj);
+  return mouseRecordArr;
 }
 
-function getMousePosition(x, y) {}
+// 이것도 템플릿 이용해서 다시 짜야함.
+function rendorRecordArray(mouseRecordArr) {
+  mouseRecordArr.forEach((element) => {
+    const div = document.createElement("div");
+    const spanInnerText = document.createElement("span");
+    const spanCnt = document.createElement("span");
+    div.appendChild(spanInnerText);
+    div.appendChild(spanCnt);
+    mouseRecord.appendChild(div);
+    spanInnerText.innerText = element.innerText;
+    spanCnt.innerText = element.cnt;
+  });
+}
+
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ execution ~~~~~~~~~~~~~~~~~~~~~~~~ */
 const DELAY_TIME = 1000;
+const mouseRecordArr = [];
 let tIdMenu = 0;
 let tIdRecord = 0;
-let x = 0;
-let y = 0;
+let timer = null;
 
 // get elements
 const dropdown = document.querySelector(".dropdown_menu_smart");
 const dropdownTitle = dropdown.querySelector(".title");
-const dropdownMenu = dropdown.querySelector(".menu");
+const dropdownList = dropdown.querySelectorAll(".option");
+const mouseRecord = document.querySelector("#mouse_movement_record");
 
 //bind listeners to elements above
 dropdown.addEventListener("mouseleave", handleMenuHide);
-dropdownTitle.addEventListener("mouseenter", handleMenuDisplay.bind(event, DELAY_TIME));
-dropdownTitle.addEventListener("mouseleave", handleTerminateSchedule);
-
-dropdownMenu.addEventListener("mousemove", handleRecordMouse);
-dropdownMenu.addEventListener("mouseenter", handlePrintRecord);
-dropdownMenu.addEventListener("mouseleave", handleTerminatePrint);
+dropdownTitle.addEventListener("mouseenter", handleMenuDisplay);
+dropdownTitle.addEventListener("mouseleave", handleStopMenuDisplaySchedule);
+dropdownList.forEach((element) => {
+  element.addEventListener("mousemove", handleMouseRecord);
+});
