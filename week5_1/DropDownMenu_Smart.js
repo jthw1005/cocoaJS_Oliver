@@ -22,24 +22,28 @@ function handleMouseRecord(event) {
   if (!timer) {
     timer = setTimeout(function () {
       timer = null;
-      rendorMouseRecord(event.target.innerText);
+      rendorMouseRecord(event.target.textContent);
     }, 500);
   }
 }
 
-function rendorMouseRecord(innerText) {
-  const mouseRecord = document.querySelector("#mouse_movement_record");
-  const tag = document.querySelector(`.${innerText}`);
+function rendorMouseRecord(textContent) {
+  const tag = document.querySelector(`.${textContent}`);
   if (tag === null) {
-    const innerHTML = `<div class="mouse-record">
-                         <span class="${innerText}">${innerText}</span>
-                         <span class="${innerText}_cnt">1</span>
-                       </div>`;
-    mouseRecord.insertAdjacentHTML("afterend", innerHTML);
+    insertHTMLMouseRecord(textContent);
   } else {
     const tagCnt = tag.nextElementSibling;
-    tagCnt.innerText = Number(tagCnt.innerText) + 1;
+    tagCnt.textContent = Number(tagCnt.textContent) + 1;
   }
+}
+
+function insertHTMLMouseRecord(textContent) {
+  const mouseRecord = document.querySelector("#mouse_movement_record");
+  const innerHTML = `<div class="mouse-record">
+                       <span class="${textContent}">${textContent}</span>
+                       <span class="${textContent}_cnt">1</span>
+                     </div>`;
+  mouseRecord.insertAdjacentHTML("afterend", innerHTML);
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ execution ~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -58,3 +62,7 @@ dropdownTitle.addEventListener("mouseleave", handleStopMenuDisplaySchedule);
 dropdownList.forEach((element) => {
   element.addEventListener("mousemove", handleMouseRecord);
 });
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~ 코드 리뷰 내용 ~~~~~~~~~~~~~~~~~~~~~~~~ */
+// insert html 하면 이벤트 리스너를 달아주기 힘들다 -> 이벤트 위임과 버블링으로 해결 가능하다
+// 아니다 create랑 append로 하면 코드가 방대해진다
