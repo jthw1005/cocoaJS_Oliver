@@ -17,68 +17,39 @@ function handleMenuHide(event) {
   }
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~ handle record ~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~ rendor mouse record ~~~~~~~~~~~~~~~~~~~~~~~~ */
 function handleMouseRecord(event) {
   if (!timer) {
     timer = setTimeout(function () {
       timer = null;
-      checkObjOverlap(event.target.innerText);
-      rendorRecordArray(mouseRecordArr);
+      rendorMouseRecord(event.target.innerText);
     }, 500);
   }
 }
 
-// 밑에 함수 다시 짜라 ㅡㅡ
-function checkObjOverlap(innerText) {
-  let flag = false;
-  mouseRecordArr.forEach((element) => {
-    if (element.innerText === innerText) {
-      element.cnt++;
-      flag = true;
-    }
-  });
-  if (flag) {
-    return mouseRecordArr;
+function rendorMouseRecord(innerText) {
+  const mouseRecord = document.querySelector("#mouse_movement_record");
+  const tag = document.querySelector(`.${innerText}`);
+  if (tag === null) {
+    const innerHTML = `<div class="mouse-record">
+                         <span class="${innerText}">${innerText}</span>
+                         <span class="${innerText}_cnt">1</span>
+                       </div>`;
+    mouseRecord.insertAdjacentHTML("afterend", innerHTML);
   } else {
-    createRecordObj(innerText);
+    const tagCnt = tag.nextElementSibling;
+    tagCnt.innerText = Number(tagCnt.innerText) + 1;
   }
-}
-
-function createRecordObj(innerText) {
-  const mouseRecordObj = {
-    innerText: innerText,
-    cnt: 0,
-  };
-  mouseRecordArr.push(mouseRecordObj);
-  return mouseRecordArr;
-}
-
-// 이것도 템플릿 이용해서 다시 짜야함.
-function rendorRecordArray(mouseRecordArr) {
-  mouseRecordArr.forEach((element) => {
-    const div = document.createElement("div");
-    const spanInnerText = document.createElement("span");
-    const spanCnt = document.createElement("span");
-    div.appendChild(spanInnerText);
-    div.appendChild(spanCnt);
-    mouseRecord.appendChild(div);
-    spanInnerText.innerText = element.innerText;
-    spanCnt.innerText = element.cnt;
-  });
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ execution ~~~~~~~~~~~~~~~~~~~~~~~~ */
 const DELAY_TIME = 1000;
-const mouseRecordArr = [];
-let tIdMenu = 0;
-let tIdRecord = 0;
 let timer = null;
 
 // get elements
 const dropdown = document.querySelector(".dropdown_menu_smart");
 const dropdownTitle = dropdown.querySelector(".title");
 const dropdownList = dropdown.querySelectorAll(".option");
-const mouseRecord = document.querySelector("#mouse_movement_record");
 
 //bind listeners to elements above
 dropdown.addEventListener("mouseleave", handleMenuHide);
