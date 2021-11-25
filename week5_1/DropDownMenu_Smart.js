@@ -3,7 +3,7 @@ function handleMenuDisplay(event) {
   const menu = event.target.nextElementSibling;
   tIdMenu = setTimeout(() => {
     menu.classList.toggle("hide");
-  }, DELAY_TIME);
+  }, DELAY_TIME_MENUBAR);
 }
 
 function handleStopMenuDisplaySchedule() {
@@ -23,7 +23,7 @@ function handleMouseRecord(event) {
     timer = setTimeout(function () {
       timer = null;
       rendorMouseRecord(event.target.textContent);
-    }, 500);
+    }, DELAY_TIME_MOUSERECORD);
   }
 }
 
@@ -47,7 +47,8 @@ function insertHTMLMouseRecord(textContent) {
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~ execution ~~~~~~~~~~~~~~~~~~~~~~~~ */
-const DELAY_TIME = 1000;
+const DELAY_TIME_MENUBAR = 1000;
+const DELAY_TIME_MOUSERECORD = 500;
 let timer = null;
 
 // get elements
