@@ -1,43 +1,51 @@
-const funcLog = []; 
-let area = 0;
-
-function getCircle(radius, x) {
-    if (isNaN(x))
-        area = radius * radius * Math.PI;
-    
-    else
-        for (let i = 1; i <= x; i++)
-            area += i * i * Math.PI;
-}
+const functionLogArr = [];
 
 function getRect(width, height) {
-    area = width * height;
+    let area = width * height;
+    return area;
 }
 
 function gettrapezoid(width_top, width_bottom, height) {
-    area = (width_top + width_bottom) * height / 2;
+    let area = (width_top + width_bottom) * height / 2;
+    return area;
+}
+
+function getCircle(radius) {
+    let area = radius * radius * Math.PI;
+    return area;
+}
+
+function getMultipleCircle(num) {
+    let area = 0;
+    for (let i = 1; i <= num; i++)
+        area =+ getCircle(i);
+    return area;
 }
 
 function getArea() {
+    let area = 0;
 
     if (arguments[0] === 'rect')
-        getRect(arguments[1], arguments[2]);
+        area = getRect(arguments[1], arguments[2]);
 
     else if (arguments[0] === 'trapezoid')
-        gettrapezoid(arguments[1], arguments[2], arguments[3]);
+        area = gettrapezoid(arguments[1], arguments[2], arguments[3]);
 
     else if (arguments[0] === 'circle')
-        getCircle(arguments[1], arguments[2]);
+        if(arguments[2] === undefined)
+            area = getCircle(arguments[1]);
+        else
+            area = getMultipleCircle(arguments[2]);
 
     else
         console.log("Please follow the form and try again.");
 
-    funcLog.push(arguments[0], area);
+    functionLogArr.push(arguments[0], area);
     console.log(area);
 }
 
 function printExecutionSequence() {
-    console.log("계산수행순서: " + funcLog.join(', '));
+    console.log("계산수행순서: " + functionLogArr.join(', '));
 }
 
 // execution
