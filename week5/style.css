@@ -1,25 +1,311 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: fantasy;
 }
 
-h1 {
+/***************************** index.html *****************************/
+#background_main {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  opacity: 40%;
+}
+
+body {
+  background-color: black;
+}
+
+.main_title {
+  font-size: 90px;
+  font-style: italic;
+  color: white;
+  border-radius: 50px;
+  margin-top: 70px;
+  margin-bottom: 50px;
+}
+
+.main_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main_middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main_menu {
+  width: 550px;
+  display: flex;
+  justify-content: space-evenly;
   text-align: center;
-  color: lightcoral;
+}
+
+.main_menu_bottom {
+  width: 550px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
   margin-top: 15px;
 }
 
-.time_left {
+a:visited {
+  color: black;
+  text-decoration: none;
+}
+a:hover {
+  background-color: lightgray;
+}
+a:link {
+  text-decoration: none;
+}
+
+.menu_main_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: gray;
+  border-radius: 10px;
+  width: 250px;
+  height: 200px;
+}
+
+.menu_main_bottom_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: gray;
+  border-radius: 10px;
+  width: 520px;
+  height: 150px;
+}
+
+.menu_main_btn_text {
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  padding: 5px;
+  border-style: none;
+}
+
+input:hover {
+  background-color: lightgray;
+}
+
+/***************************** pickCharacter.html *****************************/
+.pickCharacter_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pickCharacter_menu {
+  width: 1000px;
+  display: flex;
+  justify-content: space-evenly;
   text-align: center;
 }
 
-#canvas {
+.pickCharacter_btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: gray;
+  border-radius: 10px;
+  width: 200px;
+  height: 300px;
+}
+
+#character {
+  width: 180px;
+  height: 200px;
+  border-radius: 10px;
+  border-color: black;
+}
+/***************************** game1.html *****************************/
+#background_inside {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+  opacity: 20%;
+}
+
+.game_title {
+  width: 500px;
+  text-align: center;
+  margin-top: 15px;
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 5%;
+  transform: translate(-50%, -50%);
+}
+
+.time_left {
+  width: 290px;
+  color: white;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translate(-50%, -50%);
+}
+
+.canvas {
   width: 800px;
   height: 500px;
   border: 1px solid black;
-  background: #d79c50;
+  background: black;
   position: absolute;
-  top: 50%;
   left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fontcolor_red {
+  color: red;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.start_btn {
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.mission_success {
+  width: 600px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mission_fail {
+  width: 600px;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  font-size: 50px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.game_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: gray;
+  border-radius: 10px;
+  width: 200px;
+  height: 80px;
+}
+
+.game_btn_text {
+  color: white;
+  font-size: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/***************************** game2.html *****************************/
+.part2 {
+  color: white;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+/***************************** scoreBoard.html *****************************/
+.scoreBoard_title {
+  font-size: 40px;
+  color: white;
+  width: 300px;
+  font-weight: bolder;
+  text-align: center;
+  margin-top: 50px;
+  border-radius: 10px;
+}
+
+.scoreBoard_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scoreBoard_main {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: whitesmoke;
+  width: 400px;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.scoreBoard_btn {
+  display: flex;
+  justify-content: center;
+  background: gray;
+  border-radius: 10px;
+  width: 220px;
+  height: 40px;
+}
+
+.scoreBoard_btn_text {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  border-style: none;
+}
+
+.scoreBoard_list {
+  width: 350px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.scoreBoard_list_text {
+  font-size: 20px;
+}
+
+.scoreBoard_bottom_view {
+  width: 110px;
+  display: flex;
+  position: absolute;
+  left: 86%;
+  top: 90%;
   transform: translate(-50%, -50%);
 }

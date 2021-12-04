@@ -1,15 +1,16 @@
-class Test {
-  print() {
-    if (i === 0) {
-      return 0;
-    }
-    console.log(i);
-    i--;
-    this.print();
+let timer = null;
+
+function calculateHealth() {
+  if (!timer) {
+    timer = setTimeout(function () {
+      timer = null;
+      bullets.forEach((el) => {
+        if (getDistance(el.xpos, el.ypos, player.x + 20, player.y - 10 + player.height / 2) < CONTACTLENGTH) {
+          console.log("heat");
+          player.health -= player.damage;
+          if (player.health < 0) player.health = 0;
+        }
+      });
+    }, 500);
   }
 }
-
-let i = 5;
-const one = new Test();
-
-one.print();

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="#" />
+    <title>SquidGame1</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="game1_body">
+    <img id="background_inside" src="img/mainpage.jpeg" />
+    <h1 class="game_title"><u>Part 1. Red Light, Green Light</u></h1>
+    <div class="time_left"></div>
+    <canvas class="canvas"></canvas>
+    <span class="start_btn">Click here to Start</span>
+
+    <div class="mission_success hidden">
+      <a class="game_btn" id="gameBtn1" href="game2.html">
+        <span class="game_btn_text">Next Game</span>
+      </a>
+      <a class="game_btn" id="gameBtn2" href="game1.html">
+        <span class="game_btn_text">Retry</span>
+      </a>
+    </div>
+
+    <div class="mission_fail hidden">
+      <a class="game_btn" id="gameBtn3" href="scoreBoard.html">
+        <span class="game_btn_text">To Board</span>
+      </a>
+      <a class="game_btn" id="gameBtn4" href="game1.html">
+        <span class="game_btn_text">Retry</span>
+      </a>
+    </div>
+
+    <div class="scoreBoard_bottom_view">
+      <a class="scoreBoard_btn" href="pickCharacter.html">
+        <span class="scoreBoard_btn_text">BACK</span>
+      </a>
+    </div>
+    <script src="source/game1.js"></script>
+    <!-- <script type="moudle" src="source/pickCharacter.js"></script> -->
+  </body>
+</html>

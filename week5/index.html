@@ -2,13 +2,29 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>SquidGame</title>
+    <link rel="shortcut icon" href="#" />
+
+    <title>Main</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <h1>Red Light, Green Light</h1>
-    <div class="time_left"></div>
-    <canvas id="canvas"></canvas>
-    <script src="source/main.js"></script>
+  <body class="main_body">
+    <img id="background_main" src="img/mainpage.jpeg" />
+    <h1 class="main_title"><u>Squid Game🦑</u></h1>
+    <div class="main_middle">
+      <div class="main_menu">
+        <a class="menu_main_btn" id="btn1" href="pickCharacter.html">
+          <span class="menu_main_btn_text">START<br />GAME</span>
+        </a>
+        <a class="menu_main_btn" id="btn2" href="scoreBoard.html">
+          <span class="menu_main_btn_text">GO TO<br />BOARD</span>
+        </a>
+      </div>
+      <div class="main_menu_bottom">
+        <a class="menu_main_bottom_btn" id="btn3" href="https://www.netflix.com">
+          <span class="menu_main_btn_text">GO WATCH<br />SQUID GAME</span>
+        </a>
+      </div>
+    </div>
+    <script src="source/index.js"></script>
   </body>
 </html>
