@@ -440,7 +440,7 @@ function init() {
   return [tIdShowTimeLeft, tIdMakeBullet, tIdUpdateRendor, tIdTrafficLight];
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~ execution part ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~ execution part ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 startBtn.addEventListener("click", function (event) {
   arrOfInit = init();
   startBtn.classList.add("hidden");
