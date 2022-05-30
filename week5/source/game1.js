@@ -16,28 +16,30 @@ const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d");
 
 const gameSoundSuccess = new Audio();
-gameSoundSuccess.src = "/week5/mp3/applaus.mp3";
+gameSoundSuccess.src = "./mp3/applaus.mp3";
 gameSoundSuccess.volume = 0.4;
+gameSoundSuccess.muted = "muted";
 const clickSound = new Audio();
-clickSound.src = "/week5/mp3/click.wav";
+clickSound.src = "./mp3/click.wav";
 clickSound.volume = 0.4;
 const btnSound = new Audio();
-btnSound.src = "/week5/mp3/beep.wav";
+btnSound.src = "./mp3/beep.wav";
 btnSound.volume = 0.4;
+btnSound.muted = "muted";
 const gameSoundMugungwha = new Audio();
-gameSoundMugungwha.src = "/week5/mp3/mugungwha.mp3";
+gameSoundMugungwha.src = "./mp3/mugungwha.mp3";
 gameSoundMugungwha.volume = 0.4;
 const gameSoundTiktok = new Audio();
-gameSoundTiktok.src = "/week5/mp3/tiktok.mp3";
+gameSoundTiktok.src = "./mp3/tiktok.mp3";
 //gameSoundTiktok.volume = 0.6;
 const gameSoundGun = new Audio();
-gameSoundGun.src = "/week5/mp3/gun.mp3";
+gameSoundGun.src = "./mp3/gun.mp3";
 gameSoundGun.volume = 0.4;
 const gameSoundFail = new Audio();
-gameSoundFail.src = "/week5/mp3/nogod.mp3";
+gameSoundFail.src = "./mp3/nogod.mp3";
 //gameSoundFail.volume = 0.6;
 const gameSoundTruth = new Audio();
-gameSoundTruth.src = "/week5/mp3/truth.mp3";
+gameSoundTruth.src = "./mp3/truth.mp3";
 gameSoundTruth.volume = 0.4;
 
 const BACKGROUND_WIDTH = 1440; // 배경화면 너비
@@ -116,8 +118,13 @@ class Bullet {
     this.xdes = xdes;
     this.ydes = ydes;
 
-    this.dx = ((this.xpos - this.xdes) / getDistance(this.xpos, this.ypos, this.xdes, this.ydes)) * this.speed;
-    this.dy = ((this.ypos - this.ydes - player.height / 2) / getDistance(this.xpos, this.ypos, this.xdes, this.ydes)) * this.speed;
+    this.dx =
+      ((this.xpos - this.xdes) / getDistance(this.xpos, this.ypos, this.xdes, this.ydes)) *
+      this.speed;
+    this.dy =
+      ((this.ypos - this.ydes - player.height / 2) /
+        getDistance(this.xpos, this.ypos, this.xdes, this.ydes)) *
+      this.speed;
   }
 
   draw(ctx) {
@@ -285,8 +292,12 @@ function handleMovementOnRedAndGreen() {
     bulletInterval = bulletIntervalOnGreen;
     gameSpeed = gameSpeedOnGreen;
     bullets.forEach((el) => {
-      el.dx = ((el.xposTmp - el.xdes) / getDistance(el.xposTmp, el.yposTmp, el.xdes, el.ydes)) * el.speed;
-      el.dy = ((el.yposTmp - el.ydes - player.height / 2) / getDistance(el.xposTmp, el.yposTmp, el.xdes, el.ydes)) * el.speed;
+      el.dx =
+        ((el.xposTmp - el.xdes) / getDistance(el.xposTmp, el.yposTmp, el.xdes, el.ydes)) * el.speed;
+      el.dy =
+        ((el.yposTmp - el.ydes - player.height / 2) /
+          getDistance(el.xposTmp, el.yposTmp, el.xdes, el.ydes)) *
+        el.speed;
     });
   }
 }
@@ -297,7 +308,10 @@ function calculateHealth() {
     timerInCalHP = setTimeout(function () {
       timerInCalHP = null;
       bullets.forEach((el) => {
-        if (getDistance(el.xpos, el.ypos, player.x + 20, player.y - 10 + player.height / 2) < CONTACTLENGTH) {
+        if (
+          getDistance(el.xpos, el.ypos, player.x + 20, player.y - 10 + player.height / 2) <
+          CONTACTLENGTH
+        ) {
           console.log("heat");
           player.health -= player.damage;
           if (player.health < 0) player.health = 0;
@@ -378,7 +392,15 @@ function makeBullet() {
   const random_y = getRandomNum(10, 490);
   const bulletColor = "rgb(70, 70, 70)";
   const bulletSpeed = 10;
-  const myBullet = new Bullet(random_x, random_y, radius, bulletColor, bulletSpeed, player.x, player.y);
+  const myBullet = new Bullet(
+    random_x,
+    random_y,
+    radius,
+    bulletColor,
+    bulletSpeed,
+    player.x,
+    player.y
+  );
   bullets.push(myBullet);
   tIdMakeBullet = setTimeout(makeBullet, bulletInterval);
 }

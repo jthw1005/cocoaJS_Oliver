@@ -5,10 +5,10 @@ const pickCharacterBtn4 = document.querySelector("#btn4");
 const pickCharacterBtnBack = document.querySelector("#btn_back");
 
 const btnSound = new Audio();
-btnSound.src = "/week5/mp3/beep.wav";
+btnSound.src = "./mp3/beep.wav";
 btnSound.volume = 0.4;
 const character = new Audio();
-character.src = "/week5/mp3/character.mp3";
+character.src = "./mp3/character.mp3";
 character.volume = 0.6;
 character.play();
 
